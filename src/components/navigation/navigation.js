@@ -27,6 +27,10 @@ class Navigation extends Component{
         this.setState({ loginForm: false, authorized: true });
     }
 
+    logout = () => {
+        Facade.logout();
+        this.setState({ authorized: false });
+    }
     render() {
         return (
             <div className="grid top-nav">
@@ -36,7 +40,7 @@ class Navigation extends Component{
                 <nav>
                     <ul className="nav-header">
                         {
-                            this.state.authorized ? <li onClick={()=> Facade.logout().then(this.setState({ authorized: false }))}>Sign out</li> : <li onClick={this.loginClick}>Login</li>
+                            this.state.authorized ? <li onClick={this.logout}>Sign out</li> : <li onClick={this.loginClick}>Login</li>
                         }
                         <Popup
                             open={this.state.loginForm}
