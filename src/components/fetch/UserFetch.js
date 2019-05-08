@@ -24,7 +24,6 @@ class UserFetch {
     return fetch(URL + "/api/login", options)
       .then(handleHttpErrors)
       .then(res => {
-        console.log("result", res);
         this.setToken(res.token);
       });
   };
@@ -44,9 +43,6 @@ class UserFetch {
 
   logout = () => {
     localStorage.removeItem("jwtToken");
-    if(this.getToken() == null) {
-      alert("You have been succesfully logged out");
-    }
   };
 
   makeOptions(method, addToken, body) {
