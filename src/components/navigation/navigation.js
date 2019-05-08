@@ -4,6 +4,7 @@ import logo from './img/logo.png'
 import logoblack from './img/logo-black.png'
 import Popup from 'reactjs-popup'
 import './navigation.css'
+import Facade from '../fetch/UserFetch'
 
 class Navigation extends Component{
     state = {
@@ -22,9 +23,8 @@ class Navigation extends Component{
     }
 
     loginCheck = () => {
-        if(this.state.login === 'admin' && this.state.password === 'admin'){
-            this.setState({ loginForm: false, authorized: true })
-        }
+        Facade.login(this.state.login, this.state.password);
+        this.setState({ loginForm: false, authorized: true });
     }
 
     render() {
@@ -36,7 +36,7 @@ class Navigation extends Component{
                 <nav>
                     <ul className="nav-header">
                         {
-                            this.state.authorized ? <li onClick={()=>this.setState({authorized: false})}>Sign out</li> : <li onClick={this.loginClick}>Login</li>
+                            this.state.authorized ? <li onClick={()=> Facade.logout().then(this.setState({ authorized: false }))}>Sign out</li> : <li onClick={this.loginClick}>Login</li>
                         }
                         <Popup
                             open={this.state.loginForm}
