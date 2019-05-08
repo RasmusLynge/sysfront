@@ -1,0 +1,129 @@
+.flight-item {
+    background: #fff;
+    margin-bottom: 24px;
+    padding: 18px 18px 13px 18px;
+    grid-template-columns: 1fr 3fr 1fr;
+    box-shadow: 0 1px 3px 0 rgba(37,32,31,.3);
+}
+
+.head-item {
+    text-align: center;
+}
+
+.way-item {
+    margin-bottom: 23px;
+    margin-top: 5px;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: #8a8a8a;
+    display: inline-block;
+    padding-right: 27px;
+    font-weight: 500;
+    background: url(img/depart-icon.png) no-repeat right 1px;
+    text-align: center;
+}
+
+.flying-info {
+    font-size: 12px;
+    color: #4c4c4c;
+    text-transform: uppercase;
+    font-weight: normal;
+    background: #f5f7f7;
+    margin-bottom: 5px;
+    padding: 5px 9px 4px 9px;
+}
+
+.right-block__item {
+    text-align: center;
+}
+
+.item-price {
+    margin-bottom: 20px;
+    line-height: 23px;
+    font-weight: normal;
+    font-size: 20px;
+    color: #f76962;
+}
+
+.select-now {
+    display: inline-block;
+    font-weight: normal;
+    background: #fff;
+    padding: 9px 15px 9px 15px;
+    border-radius: 3px;
+    border: 1px solid #e5e5e5;
+    text-decoration: none;
+    color: #838383;
+    font-size: 10px;
+    text-transform: uppercase;
+    cursor: pointer;
+    outline: none;
+}
+
+.flight-line {
+    padding: 15px 0px 14px 0px;
+    border-bottom: 1px solid #ebebeb;
+}
+
+.flight-line__departure, .flight-line__arrival, .flight-line__time {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.flight-line b {
+    text-transform: uppercase;
+    font-size: 10px;
+    margin-bottom: 3px;
+    color: #848484;
+    font-weight: 600;
+    display: block;
+}
+
+.flight-line span{
+    font-size: 12px;
+    color: #4a90a4;
+    font-weight: bold;
+}
+
+.divider {
+    display: inline-block;
+    vertical-align: middle;
+    width: 4px;
+    height: 7px;
+    background: url(img/flt-devider.png) left top no-repeat;
+    margin: 0 30px;
+}
+
+.flight-line input {
+    margin-right: 10px;
+}
+
+.flight-line:last-child {
+    border: none;
+}
+
+.radio-label {
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    margin-right: 10px;
+}
+
+.radio-label > input[type=radio] {
+    display: none;
+}
+
+.radio-label > span {
+    background: #fff;
+    border: solid 3px #bbb;
+    display:inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    vertical-align:middle;
+}
+
+.radio-label > input[type=radio]:checked + span {
+    background: #f76962;
+}
