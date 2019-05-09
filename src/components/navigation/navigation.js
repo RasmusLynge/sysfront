@@ -1,17 +1,25 @@
-import React, {Component} from 'react'
-import {Link} from "react-router-dom"
+import React, { Component } from 'react'
+import { Link } from "react-router-dom"
 import logo from './img/logo.png'
 import logoblack from './img/logo-black.png'
 import Popup from 'reactjs-popup'
 import './navigation.css'
 import Facade from '../fetch/UserFetch'
 
-class Navigation extends Component{
+class Navigation extends Component {
     state = {
         login: '',
         password: '',
         authorized: false,
-        loginForm: false
+        loginForm: false,
+        error: false
+    }
+
+    componentDidMount(){
+        const loggedIn = Facade.loggedIn();
+        if(loggedIn) {
+            this.setState({ authorized: true });
+        }
     }
 
     loginClick = () => {
@@ -22,20 +30,26 @@ class Navigation extends Component{
         this.setState({ loginForm: false })
     }
 
-    loginCheck = () => {
-        Facade.login(this.state.login, this.state.password);
-        this.setState({ loginForm: false, authorized: true });
+    loginCheck = async () => {
+        await Facade.login(this.state.login, this.state.password);
+        const loggedIn = Facade.loggedIn();
+        if (loggedIn) {
+            this.setState({ loginForm: false, authorized: true, error: false });
+        } else {
+            this.setState({ error: true });
+        }
     }
 
     logout = () => {
         Facade.logout();
-        this.setState({ authorized: false });
+        this.setState({ authorized: false, login: '', password: '' });
     }
+
     render() {
         return (
             <div className="grid top-nav">
                 <div className="logo">
-                    <Link to={process.env.PUBLIC_URL + "/"}><img src={logo} alt=""/></Link>
+                    <Link to={process.env.PUBLIC_URL + "/"}><img src={logo} alt="" /></Link>
                 </div>
                 <nav>
                     <ul className="nav-header">
@@ -50,13 +64,14 @@ class Navigation extends Component{
                             <div className="authorize-popup">
                                 <div className="authorize-content">
                                     <div className="logo logo-black">
-                                        <Link to={process.env.PUBLIC_URL + "/"}><img src={logoblack} alt=""/></Link>
+                                        <Link to={process.env.PUBLIC_URL + "/"}><img src={logoblack} alt="" /></Link>
                                     </div>
                                     <div className="authorize-title">
-                                        Login in to Your Accont
+                                        Login in to Your Account
                                     </div>
-                                    <input type="text" placeholder="for test type admin" onChange={(e)=> {this.setState({login: e.target.value})}}/>
-                                    <input type="password" placeholder="for test type admin" onChange={(e)=> {this.setState({password: e.target.value})}}/>
+                                    <input type="text" placeholder="for test type admin" onChange={(e) => { this.setState({ login: e.target.value }) }} />
+                                    <input type="password" placeholder="for test type admin" onChange={(e) => { this.setState({ password: e.target.value }) }} />
+                                    {this.state.error && <p className="authorize-err">Username or Password was incorrect</p>}
                                     <div className="authorize-actions grid">
                                         <button className="login-button" onClick={this.loginCheck}>Login to your account</button>
                                         <button className="login-button login-facebook" onClick={this.loginCheck}>Login with Facebook</button>
@@ -70,7 +85,6 @@ class Navigation extends Component{
             </div>
         )
     }
-
 }
 
 export default Navigation

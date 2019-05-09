@@ -16,7 +16,7 @@ class UserFetch {
     return fetch(URL + "/api/info/" + decoded.username, options).then(handleHttpErrors);
   };
 
-  login = (user, pass) => {
+  login = async (user, pass) => {
     const options = this.makeOptions("POST", true, {
       username: user,
       password: pass
@@ -33,7 +33,9 @@ class UserFetch {
   };
 
   getToken = () => {
-    return localStorage.getItem("jwtToken");
+    const token = localStorage.getItem("jwtToken");
+    console.log("token", token);
+    return token;
   };
 
   loggedIn = () => {
