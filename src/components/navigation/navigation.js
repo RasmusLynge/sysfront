@@ -15,9 +15,9 @@ class Navigation extends Component {
         error: false
     }
 
-    componentDidMount(){
+    componentDidMount() {
         const loggedIn = Facade.loggedIn();
-        if(loggedIn) {
+        if (loggedIn) {
             this.setState({ authorized: true });
         }
     }
@@ -31,12 +31,17 @@ class Navigation extends Component {
     }
 
     loginCheck = async () => {
-        await Facade.login(this.state.login, this.state.password);
+        try {
+            await Facade.login(this.state.login, this.state.password);
+        } catch (error) {
+            console.log(error);
+        }
         const loggedIn = Facade.loggedIn();
         if (loggedIn) {
             this.setState({ loginForm: false, authorized: true, error: false });
         } else {
             this.setState({ error: true });
+
         }
     }
 
