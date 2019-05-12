@@ -99,20 +99,21 @@ const FlightItem = ({ e }) => {
 
 let eventClick = (e) => {
   fetchEvents(e);
+ // do something with events that are now in state
+ console.log
 }
 
 let fetchEvents = async (e) => {
-  const latitude = e.cordiEnd.split('/')[0]
-  console.log(latitude)
-  const longitude = e.cordiEnd.split('/')[1]
+  const latitude = e.cordiEnd.split('/')[0];
+  const longitude = e.cordiEnd.split('/')[1];
+  const kilometerRange = 100; 
   const url = FetchEvents.makeurl(
     latitude,
     longitude,
-    100
+    kilometerRange //km away from the airport 
   );
   console.log(url);
   const events = await FetchEvents.fetchData(url);
-  console.log(events)
   this.setState({ eventData: events });
 };
 

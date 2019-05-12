@@ -5,6 +5,7 @@ import { Range } from "rc-slider";
 import { Popover } from "../popover";
 import FlightItem from "./flight-item";
 import FetchFlights from "./FetchFlights";
+import FetchEvents from "./FetchEvents.js";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "rc-slider/assets/index.css";
@@ -74,6 +75,18 @@ class Result extends Component {
     this.setState({ flightData: flights });
   };
 
+  fetchEvents = async (evt) => {
+    const url = FetchEvents.directions(
+      this.state.departure, 
+      this.state.destination,
+      this.state.depart
+    );
+    const flights = await FetchFlights.fetchData(url);
+    this.setState({ flightData: flights });
+  };
+
+  
+
   departureChange = e => {
     const departureInput = e.target.value;
     this.setState({ departure: departureInput });
@@ -118,7 +131,6 @@ class Result extends Component {
       );
     }
   };
-  
   flightParser = () => {
     if (
       typeof this.state.flightData === "undefined" ||
