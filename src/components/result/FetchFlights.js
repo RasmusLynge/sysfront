@@ -1,4 +1,4 @@
-const endPoint = "https://magnusklitmose.com/Flights-1.0/api/flight";
+const endPoint = "https://magnusklitmose.com/jwtbackend/api";
 
 function handleHttpErrors(res) {
   if (!res.ok) {
