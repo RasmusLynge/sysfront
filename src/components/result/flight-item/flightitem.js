@@ -5,6 +5,7 @@ import sasLogo from "./img/sasLogo.png";
 import iagLogo from "./img/iagLogo.png";
 import errorLogo from "./img/errorLogo.png";
 import "./flightitem.css";
+import FetchEvents from "../FetchEvents"
 
 // Convert a time in hh:mm format to minutes
 function timeToMins(time) {
@@ -27,6 +28,9 @@ function timeFromMins(mins) {
 function addTimes(t0, t1) {
   return timeFromMins(timeToMins(t0) + timeToMins(t1));
 }
+
+
+
 
 const FlightItem = ({ e }) => {
   var logo = errorLogo;
@@ -83,11 +87,33 @@ const FlightItem = ({ e }) => {
       <div className="right-block__item">
         <div className="item-price">{e.price},-</div>
         <button className="select-now">select now</button>
-        <br/>
+        <br />
         <button className="select-wish">wishlist</button>
+        <br />
+        <button onClick={() => eventClick(e)} className="select-wish">Look for events near destination (100 km)</button>
+        <br />
       </div>
     </div>
   );
+};
+
+let eventClick = (e) => {
+  fetchEvents(e);
+}
+
+let fetchEvents = async (e) => {
+  const latitude = e.cordiEnd.split('/')[0]
+  console.log(latitude)
+  const longitude = e.cordiEnd.split('/')[1]
+  const url = FetchEvents.makeurl(
+    latitude,
+    longitude,
+    100
+  );
+  console.log(url);
+  const events = await FetchEvents.fetchData(url);
+  console.log(events)
+  this.setState({ eventData: events });
 };
 
 export default FlightItem;

@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-const endPoint = "https://magnusklitmose.com/jwtbackend/api";
-=======
 const endPoint = "https://magnusklitmose.com/jwtbackend/api/info";
->>>>>>> 18a305b62358ee1fbe4778e9e688ba1945dbbbb1
 
 function handleHttpErrors(res) {
   if (!res.ok) {
@@ -20,7 +16,8 @@ class flightFetch {
 
   directions = (fromCountry, toCountry, date) => {
     date = date.toLocaleDateString();
-    date = date.replace(/\./g, "-");
+    date = date.replace(/\//gi, '-');
+    console.log(date)
     let url = `/country/date/${fromCountry}/${toCountry}/${date}`
     return url;
   }
