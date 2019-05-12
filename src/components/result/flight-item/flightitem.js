@@ -59,10 +59,6 @@ const FlightItem = ({ e }) => {
           {e.departureDate} From: {e.startDestination} - To: {e.endDestination}
         </div>
         <div className="flight-line">
-          <label className="radio-label">
-            <input name="test" type="radio" />
-            <span />
-          </label>
           <div className="flight-line__departure">
             <b>Departure</b>
             <span>{e.departureTime}</span>
@@ -77,11 +73,18 @@ const FlightItem = ({ e }) => {
             <b>Time</b>
             <span>{e.duration}</span>
           </div>
+          <div className="divider" />
+          <div className="flight-line__time">
+            <b>Seats</b>
+            <span>{e.numberOfSeats}</span>
+          </div>
         </div>
       </div>
       <div className="right-block__item">
         <div className="item-price">{e.price},-</div>
         <button className="select-now">select now</button>
+        <br/>
+        <button className="select-wish">wishlist</button>
       </div>
     </div>
   );

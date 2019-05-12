@@ -1,46 +1,52 @@
-import React, {Component} from 'react'
-import { Route } from 'react-router-dom'
-import {HomePage,FlightPage} from "../pages"
+import React, { Component } from "react";
+import { Route } from "react-router-dom";
+import { HomePage, FlightPage, UserPage} from "../pages";
 
-import './app.css'
+import "./app.css";
 
-class App  extends Component{
+class App extends Component {
+  state = {
+    departure: "",
+    destination: "",
+    depart: new Date(),
+    passengers: 1,
+    adults: 1,
+    children: 0,
+    infant: 0,
+    isLoggedin: false
+  };
 
-    state = {
-        departure: '',
-        destination: '',
-        depart: new Date(),
-        passengers: 1,
-        adults: 1,
-        children: 0,
-        infant: 0
-    }
+  startSearch = state => {
+    this.setState({ ...state });
+  };
 
-    startSearch = (state) => {
-        this.setState({...state})
-    }
-
-    render() {
-        return (
-            <>
-                <Route path={process.env.PUBLIC_URL + '/'}
-                       render={()=> {
-                           return (
-                               <HomePage startSearch={this.startSearch}/>
-                           )
-                       }}
-                       exact/>
-                <Route path={process.env.PUBLIC_URL + '/flight/'}
-                       render ={() => {
-                           return (
-                               <FlightPage data={this.state} startSearch={this.startSearch}/>
-                           )
-                       }}
-
-                />
-            </>
-        )
-    }
+  render() {
+    return (
+      <React.Fragment>
+        <Route
+          path={process.env.PUBLIC_URL + "/"}
+          render={() => {
+            return <HomePage startSearch={this.startSearch} />;
+          }}
+          exact
+        />
+        <Route
+          path={process.env.PUBLIC_URL + "/flight/"}
+          render={() => {
+            return (
+              <FlightPage data={this.state} startSearch={this.startSearch} />
+            );
+          }}
+        />
+        <Route
+          path={process.env.PUBLIC_URL + "/user/"}
+          render={() => {
+            return <UserPage data={this.state} startSearch={this.startSearch}/>;
+          }}
+        />
+      </React.Fragment>
+    );
+  }
 }
 
-export default App
+export default App;

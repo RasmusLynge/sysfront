@@ -3,66 +3,19 @@ import DatePicker from "react-datepicker";
 import { withRouter } from "react-router-dom";
 import { Range } from "rc-slider";
 import { Popover } from "../popover";
-import FlightItem from "./flight-item";
-import FetchFlights from "./FetchFlights";
+//import FlightItem from "./flight-item";
+//import FetchFlights from "./FetchFlights";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "rc-slider/assets/index.css";
-import "./result.css";
+import "./user.css";
 
-class Slider extends Component {
+
+class User extends Component {
   state = {
-    min: 0,
-    max: 1500,
-    currentMin: 200,
-    currentMax: 500
-  };
-
-  changeSlider = value => {
-    const currentMin = value[0];
-    const currentMax = value[1];
-    this.setState({ currentMax, currentMin });
-  };
-
-  render() {
-    return (
-      <div>
-        <Range
-          defaultValue={[200, 500]}
-          min={this.state.min}
-          max={this.state.max}
-          onChange={this.changeSlider}
-          step={5}
-        />
-        <div className="price-amounts">
-          <input
-            type="number"
-            readOnly="readOnly"
-            placeholder={this.state.currentMin + " DKK"}
-          />
-          <input
-            type="number"
-            readOnly="readOnly"
-            placeholder={this.state.currentMax + " DKK"}
-          />
-        </div>
-      </div>
-    );
-  }
-}
-
-class Result extends Component {
-  state = {
-    departure: this.props.data.departure,
-    destination: this.props.data.destination,
-    depart: this.props.data.depart,
-    passengers: this.props.data.passengers,
-    adults: this.props.data.adults,
-    children: this.props.data.children,
-    infant: this.props.data.infant,
-    popoverPassengers: false,
     flightData: this.props.data.flightData
   };
+/* We will use this for fetching wishlist
 
   fetchFlights = async () => {
     const url = FetchFlights.directions(
@@ -73,6 +26,7 @@ class Result extends Component {
     const flights = await FetchFlights.fetchData(url);
     this.setState({ flightData: flights });
   };
+  */
 
   departureChange = e => {
     const departureInput = e.target.value;
@@ -111,14 +65,14 @@ class Result extends Component {
   handleClick = e => {
     e.preventDefault();
     this.props.startSearch(this.state);
-    this.fetchFlights();
+    // this.fetchFlights();
     if (this.state.destination.length > 1 && this.state.departure.length > 1) {
       this.props.history.push(
         `${process.env.PUBLIC_URL}/flight/${this.state.departure}`
       );
     }
   };
-  
+  /*
   flightParser = () => {
     if (
       typeof this.state.flightData === "undefined" ||
@@ -132,7 +86,7 @@ class Result extends Component {
       return <h5>No flights available</h5>;
     }
   };
-
+*/
   sortFlights = evt => {
     if (evt.target.value === "price") {
       let flightsSort = this.state.flightData.sort((a, b) =>
@@ -196,7 +150,7 @@ class Result extends Component {
     return (
       <React.Fragment>
         <div className="page-title">
-          Flights - <span>one way</span>
+          Your Wishlist:
         </div>
         <div className="result-block grid">
           <div className="result-block__left">
@@ -204,7 +158,7 @@ class Result extends Component {
               <span>results found.</span>
             </div>
             <div className="side-block">
-              <div className="side-block__search grid">
+              <div className="side-block__search2 grid">
                 <div>
                   <label>From</label>
                   <input
@@ -214,8 +168,9 @@ class Result extends Component {
                     onChange={this.departureChange}
                   />
                 </div>
+                <br/>
                 <div>
-                  <label>To</label>
+                  <label>To </label>
                   <input
                     type="text"
                     value={this.state.destination}
@@ -223,6 +178,7 @@ class Result extends Component {
                     onChange={this.destinationChange}
                   />
                 </div>
+                <br/>
                 <div>
                   <label>Departure</label>
                   <DatePicker
@@ -230,6 +186,7 @@ class Result extends Component {
                     onChange={this.departDateChange}
                   />
                 </div>
+                <br/>
                 <div>
                   <label>Passengers</label>
                   <input
@@ -243,59 +200,17 @@ class Result extends Component {
                     <Popover popoverChange={this.popoverChange} />
                   ) : null}
                 </div>
+                <br/>
                 <div className="side-block__button">
                   <button onClick={this.handleClick}>Search</button>
                 </div>
               </div>
             </div>
             <br />
-            <div className="side-stops">
-              <div className="side-title">Number of stops</div>
-              <div className="radio-area">
-                <label className="radio-label">
-                  <input name="stops" type="radio" />
-                  <span className="checkbox-span">
-                    <span />
-                  </span>
-                  All
-                </label>
-              </div>
-              <div className="radio-area">
-                <label className="radio-label">
-                  <input name="stops" type="radio" />
-                  <span className="checkbox-span">
-                    <span />
-                  </span>
-                  Direct
-                </label>
-              </div>
-              <div className="radio-area">
-                <label className="radio-label">
-                  <input name="stops" type="radio" />
-                  <span className="checkbox-span">
-                    <span />
-                  </span>
-                  1 Stop
-                </label>
-              </div>
-              <div className="radio-area">
-                <label className="radio-label">
-                  <input name="stops" type="radio" />
-                  <span className="checkbox-span">
-                    <span />
-                  </span>
-                  2+ Stops
-                </label>
-              </div>
-            </div>
-            <div className="slider-price">
-              <div className="slider-title">Price</div>
-              <Slider />
-            </div>
           </div>
           <div className="result-block__right">
             <div className="result-catalog__filter">
-              <label>Sort results by: </label>
+              <label>Sort Your wishlist by: </label>
               <select className="price-select" id="sortData" onChange={this.onChange}>
                 <option value="">Please Select an option</option>
                 <option value="price">By Price</option>
@@ -306,7 +221,7 @@ class Result extends Component {
               </select>
             </div>
             <div className="result-catalog">
-              <this.flightParser />
+              <h5> Fetch here! </h5>
             </div>
           </div>
         </div>
@@ -315,4 +230,4 @@ class Result extends Component {
   }
 }
 
-export default withRouter(Result);
+export default withRouter(User);
