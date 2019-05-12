@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 const endPoint = "https://magnusklitmose.com/jwtbackend/api";
+=======
+const endPoint = "https://magnusklitmose.com/jwtbackend/api/info";
+>>>>>>> 18a305b62358ee1fbe4778e9e688ba1945dbbbb1
 
 function handleHttpErrors(res) {
   if (!res.ok) {

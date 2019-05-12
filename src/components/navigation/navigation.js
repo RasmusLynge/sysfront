@@ -39,6 +39,7 @@ class Navigation extends Component {
         const loggedIn = Facade.loggedIn();
         if (loggedIn) {
             this.setState({ loginForm: false, authorized: true, error: false });
+            
         } else {
             this.setState({ error: true });
 
@@ -59,7 +60,7 @@ class Navigation extends Component {
                 <nav>
                     <ul className="nav-header">
                         {
-                            this.state.authorized ? <li onClick={this.logout}>Sign out</li> : <li onClick={this.loginClick}>Login</li>
+                            this.state.authorized ? <li className="input-passengers" onClick={this.logout}>Sign out</li> : <li onClick={this.loginClick}>Login</li>
                         }
                         <Popup
                             open={this.state.loginForm}
@@ -85,6 +86,7 @@ class Navigation extends Component {
                             </div>
                         </Popup>
                         <li><Link to={process.env.PUBLIC_URL + "/"}>Flights</Link></li>
+                        <li><Link to={process.env.PUBLIC_URL + "/User"}>User</Link></li>
                     </ul>
                 </nav>
             </div>

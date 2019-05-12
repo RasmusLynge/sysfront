@@ -60,6 +60,22 @@
     outline: none;
 }
 
+.select-wish {
+    margin-top: 5px solid #ebebeb;
+    display: inline-block;
+    font-weight: normal;
+    background: #f76962;
+    padding: 9px 15px 9px 15px;
+    border-radius: 3px;
+    border: 1px solid #e5e5e5;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 10px;
+    text-transform: uppercase;
+    cursor: pointer;
+    outline: none;
+}
+
 .flight-line {
     padding: 15px 0px 14px 0px;
     border-bottom: 1px solid #ebebeb;
