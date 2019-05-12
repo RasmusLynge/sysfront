@@ -1,5 +1,5 @@
 import jwt_decode from 'jwt-decode';
-const URL = "https://simonbojesen.com/jwtbackend";
+const URL = "https://rasmuslynge.com/jwtbackend";
 
 function handleHttpErrors(res) {
   if (!res.ok) {
