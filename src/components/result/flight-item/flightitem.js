@@ -4,6 +4,7 @@ import ryanAirLogo from "./img/ryanairLogo.png";
 import sasLogo from "./img/sasLogo.png";
 import iagLogo from "./img/iagLogo.png";
 import errorLogo from "./img/errorLogo.png";
+import FetchFlights from "../FetchFlights"
 import "./flightitem.css";
 
 // Convert a time in hh:mm format to minutes
@@ -26,6 +27,14 @@ function timeFromMins(mins) {
 // Add two times in hh:mm format
 function addTimes(t0, t1) {
   return timeFromMins(timeToMins(t0) + timeToMins(t1));
+}
+
+function addWish (id, e) {
+  e.preventDefault();
+
+  if (localStorage.getItem("jwtToken") != null) {
+    FetchFlights.postData(id);
+  }
 }
 
 const FlightItem = ({ e }) => {
@@ -83,8 +92,10 @@ const FlightItem = ({ e }) => {
       <div className="right-block__item">
         <div className="item-price">{e.price},-</div>
         <button className="select-now">select now</button>
-        <br/>
-        <button className="select-wish">wishlist</button>
+        <br />
+        <button className="select-wish" onClick={evt => addWish(e.id, evt)}>
+          Wishlist
+        </button>
       </div>
     </div>
   );
