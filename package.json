@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "http://andisal.github.io/reactflight",
   "dependencies": {
+    "cors": "^2.8.5",
     "jwt-decode": "^2.2.0",
     "rc-slider": "^8.6.9",
     "react": "^16.8.6",

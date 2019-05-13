@@ -111,7 +111,7 @@ const FlightItem = ({ e }) => {
 let eventClick = e => {
   fetchEvents(e);
   // do something with events that are now in state
-  console.log(e);
+  
 };
 
 let fetchEvents = async e => {
@@ -125,7 +125,8 @@ let fetchEvents = async e => {
   );
   console.log(url);
   const events = await FetchEvents.fetchData(url);
-  this.setState({ eventData: events });
+  console.log(events);
+  //this.setState({ eventData: events });
 };
 
 export default FlightItem;
