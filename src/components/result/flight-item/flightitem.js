@@ -4,8 +4,9 @@ import ryanAirLogo from "./img/ryanairLogo.png";
 import sasLogo from "./img/sasLogo.png";
 import iagLogo from "./img/iagLogo.png";
 import errorLogo from "./img/errorLogo.png";
-import FetchFlights from "../FetchFlights"
+import FetchFlights from "../FetchFlights";
 import "./flightitem.css";
+import FetchEvents from "../FetchEvents";
 
 // Convert a time in hh:mm format to minutes
 function timeToMins(time) {
@@ -29,7 +30,7 @@ function addTimes(t0, t1) {
   return timeFromMins(timeToMins(t0) + timeToMins(t1));
 }
 
-function addWish (id, e) {
+function addWish(id, e) {
   e.preventDefault();
 
   if (localStorage.getItem("jwtToken") != null) {
@@ -96,9 +97,35 @@ const FlightItem = ({ e }) => {
         <button className="select-wish" onClick={evt => addWish(e.id, evt)}>
           Wishlist
         </button>
+
+        <br />
+        <button onClick={() => eventClick(e)} className="select-wish">
+          Look for events near destination (100 km)
+        </button>
+        <br />
       </div>
     </div>
   );
+};
+
+let eventClick = e => {
+  fetchEvents(e);
+  // do something with events that are now in state
+  console.log(e);
+};
+
+let fetchEvents = async e => {
+  const latitude = e.cordiEnd.split("/")[0];
+  const longitude = e.cordiEnd.split("/")[1];
+  const kilometerRange = 100;
+  const url = FetchEvents.makeurl(
+    latitude,
+    longitude,
+    kilometerRange //km away from the airport
+  );
+  console.log(url);
+  const events = await FetchEvents.fetchData(url);
+  this.setState({ eventData: events });
 };
 
 export default FlightItem;
