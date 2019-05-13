@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import DatePicker from "react-datepicker";
 import { withRouter } from "react-router-dom";
-import { Range } from "rc-slider";
+//import { Range } from "rc-slider";
 import { Popover } from "../popover";
 //import FlightItem from "./flight-item";
 //import FetchFlights from "./FetchFlights";
@@ -72,7 +72,9 @@ class User extends Component {
       );
     }
   };
-  /*
+
+  /* used for placing the list of flights in the boxes on the left
+
   flightParser = () => {
     if (
       typeof this.state.flightData === "undefined" ||

@@ -179,31 +179,50 @@ class Result extends Component {
   };
   sortTimes(array, sortby) {
     if (sortby === "departure_time") {
-      return array.sort(function (a, b) {
-        if (parseInt(a.departureTime.split(":")[0]) - parseInt(b.departureTime.split(":")[0]) === 0) {
-          return parseInt(a.departureTime.split(":")[1]) - parseInt(b.departureTime.split(":")[1]);
+      return array.sort(function(a, b) {
+        if (
+          parseInt(a.departureTime.split(":")[0]) -
+            parseInt(b.departureTime.split(":")[0]) ===
+          0
+        ) {
+          return (
+            parseInt(a.departureTime.split(":")[1]) -
+            parseInt(b.departureTime.split(":")[1])
+          );
         } else {
-          return parseInt(a.departureTime.split(":")[0]) - parseInt(b.departureTime.split(":")[0]);
+          return (
+            parseInt(a.departureTime.split(":")[0]) -
+            parseInt(b.departureTime.split(":")[0])
+          );
         }
-      })
+      });
     } else if (sortby === "duration") {
-      return array.sort(function (a, b) {
-        if (parseInt(a.duration.split(":")[0]) - parseInt(b.duration.split(":")[0]) === 0) {
-          return parseInt(a.duration.split(":")[1]) - parseInt(b.duration.split(":")[1]);
+      return array.sort(function(a, b) {
+        if (
+          parseInt(a.duration.split(":")[0]) -
+            parseInt(b.duration.split(":")[0]) ===
+          0
+        ) {
+          return (
+            parseInt(a.duration.split(":")[1]) -
+            parseInt(b.duration.split(":")[1])
+          );
         } else {
-          return parseInt(a.duration.split(":")[0]) - parseInt(b.duration.split(":")[0]);
+          return (
+            parseInt(a.duration.split(":")[0]) -
+            parseInt(b.duration.split(":")[0])
+          );
         }
-      })
+      });
     }
-
   }
+
   onChange = evt => {
     this.setState({ [evt.target.id]: evt.target.value });
     this.sortFlights(evt);
   };
 
   render() {
-    console.log(this.state.flightData);
     const textInputPassengers = `${this.state.passengers} Traveller`;
     return (
       <React.Fragment>
@@ -308,7 +327,11 @@ class Result extends Component {
           <div className="result-block__right">
             <div className="result-catalog__filter">
               <label>Sort results by: </label>
-              <select className="price-select" id="sortData" onChange={this.onChange}>
+              <select
+                className="price-select"
+                id="sortData"
+                onChange={this.onChange}
+              >
                 <option value="">Please Select an option</option>
                 <option value="price">By Price</option>
                 <option value="seats">By Seats</option>
