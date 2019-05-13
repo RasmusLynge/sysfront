@@ -86,7 +86,7 @@ class Navigation extends Component {
                             </div>
                         </Popup>
                         <li><Link to={process.env.PUBLIC_URL + "/"}>Flights</Link></li>
-                        <li><Link to={process.env.PUBLIC_URL + "/User"}>User</Link></li>
+                        {this.state.authorized && <li><Link to={process.env.PUBLIC_URL + "/User"}>User</Link></li>}
                     </ul>
                 </nav>
             </div>

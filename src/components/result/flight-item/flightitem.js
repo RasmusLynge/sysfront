@@ -29,9 +29,6 @@ function addTimes(t0, t1) {
   return timeFromMins(timeToMins(t0) + timeToMins(t1));
 }
 
-
-
-
 const FlightItem = ({ e }) => {
   var logo = errorLogo;
 
@@ -100,7 +97,7 @@ const FlightItem = ({ e }) => {
 let eventClick = (e) => {
   fetchEvents(e);
  // do something with events that are now in state
- console.log
+ console.log(e);
 }
 
 let fetchEvents = async (e) => {
