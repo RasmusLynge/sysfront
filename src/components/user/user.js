@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import DatePicker from "react-datepicker";
 import { withRouter } from "react-router-dom";
-import { Range } from "rc-slider";
 import { Popover } from "../popover";
 import FlightItemWish from "../result/flight-item/flightItemWishes";
-import FetchFlights from "../result/FetchFlights";
 import FetchWishes from "../fetch/UserFetch";
 import "react-datepicker/dist/react-datepicker.css";
 import "rc-slider/assets/index.css";
@@ -19,6 +17,7 @@ class User extends Component {
   fetchFlights = async () => {
     let wishes = await FetchWishes.fetchData();
     this.setState({ flightData: wishes });
+    console.log(this.state.flightData);
   };
 
   departureChange = e => {

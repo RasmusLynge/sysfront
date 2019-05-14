@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
-import { HomePage, FlightPage } from "../pages"
+import { HomePage, FlightPage, UserPage } from "../pages"
 
 import './app.css'
 
@@ -38,10 +38,10 @@ render() {
                 }}
 
             />
-            <Route path={process.env.PUBLIC_URL + '/flight/'}
+            <Route path={process.env.PUBLIC_URL + '/user/'}
                 render={() => {
                     return (
-                        <FlightPage data={this.state} startSearch={this.startSearch} />
+                        <UserPage data={this.state} startSearch={this.startSearch} />
                     )
                 }}
 
