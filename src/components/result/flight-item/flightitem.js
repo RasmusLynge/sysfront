@@ -126,7 +126,8 @@ let fetchEvents = async e => {
   );
   console.log(url);
   const events = await FetchEvents.fetchData(url);
-  this.setState({ eventData: events });
+  console.log(events);
+  //this.setState({ eventData: events });
 };
 
 export default FlightItem;

@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import DatePicker from "react-datepicker";
 import { withRouter } from "react-router-dom";
-//import { Range } from "rc-slider";
+import { Range } from "rc-slider";
 import { Popover } from "../popover";
-//import FlightItem from "./flight-item";
-//import FetchFlights from "./FetchFlights";
-
+import FlightItemWish from "../result/flight-item/flightItemWishes";
+import FetchFlights from "../result/FetchFlights";
+import FetchWishes from "../fetch/UserFetch";
 import "react-datepicker/dist/react-datepicker.css";
 import "rc-slider/assets/index.css";
 import "./user.css";
@@ -15,18 +15,11 @@ class User extends Component {
   state = {
     flightData: this.props.data.flightData
   };
-/* We will use this for fetching wishlist
 
   fetchFlights = async () => {
-    const url = FetchFlights.directions(
-      this.state.departure,
-      this.state.destination,
-      this.state.depart
-    );
-    const flights = await FetchFlights.fetchData(url);
-    this.setState({ flightData: flights });
+    let wishes = await FetchWishes.fetchData();
+    this.setState({ flightData: wishes });
   };
-  */
 
   departureChange = e => {
     const departureInput = e.target.value;
@@ -62,18 +55,14 @@ class User extends Component {
     }));
   };
 
-  handleClick = e => {
-    e.preventDefault();
-    this.props.startSearch(this.state);
-    // this.fetchFlights();
-    if (this.state.destination.length > 1 && this.state.departure.length > 1) {
-      this.props.history.push(
-        `${process.env.PUBLIC_URL}/flight/${this.state.departure}`
-      );
-    }
+  componentDidMount() {
+    this.update();
   };
 
-  /* used for placing the list of flights in the boxes on the left
+  update = () => {
+    console.log("update");
+    this.fetchFlights();
+  }
 
   flightParser = () => {
     if (
@@ -83,12 +72,12 @@ class User extends Component {
       return <h5>Please search again</h5>;
     } else {
       if (this.state.flightData.length > 0) {
-        return this.state.flightData.map(e => <FlightItem key={e.id} e={e} />);
+        return this.state.flightData.map(e => <FlightItemWish key={e.id} e={e} update={this.update} />);
       }
       return <h5>No flights available</h5>;
     }
   };
-*/
+
   sortFlights = evt => {
     if (evt.target.value === "price") {
       let flightsSort = this.state.flightData.sort((a, b) =>
@@ -147,7 +136,6 @@ class User extends Component {
   };
 
   render() {
-    console.log(this.state.flightData);
     const textInputPassengers = `${this.state.passengers} Traveller`;
     return (
       <React.Fragment>
@@ -170,7 +158,7 @@ class User extends Component {
                     onChange={this.departureChange}
                   />
                 </div>
-                <br/>
+                <br />
                 <div>
                   <label>To </label>
                   <input
@@ -180,7 +168,7 @@ class User extends Component {
                     onChange={this.destinationChange}
                   />
                 </div>
-                <br/>
+                <br />
                 <div>
                   <label>Departure</label>
                   <DatePicker
@@ -188,7 +176,7 @@ class User extends Component {
                     onChange={this.departDateChange}
                   />
                 </div>
-                <br/>
+                <br />
                 <div>
                   <label>Passengers</label>
                   <input
@@ -202,7 +190,7 @@ class User extends Component {
                     <Popover popoverChange={this.popoverChange} />
                   ) : null}
                 </div>
-                <br/>
+                <br />
                 <div className="side-block__button">
                   <button onClick={this.handleClick}>Search</button>
                 </div>
@@ -223,7 +211,7 @@ class User extends Component {
               </select>
             </div>
             <div className="result-catalog">
-              <h5> Fetch here! </h5>
+              <this.flightParser />
             </div>
           </div>
         </div>
