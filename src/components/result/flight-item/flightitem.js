@@ -109,9 +109,9 @@ const FlightItem = ({ e }) => {
 };
 
 let eventClick = e => {
-  fetchEvents(e);
+  const events = fetchEvents(e);
   // do something with events that are now in state
-  
+   alert(events)
 };
 
 let fetchEvents = async e => {
@@ -126,6 +126,9 @@ let fetchEvents = async e => {
   console.log(url);
   const events = await FetchEvents.fetchData(url);
   console.log(events);
+  alert(events)
+  return events;
+
   //this.setState({ eventData: events });
 };
 
