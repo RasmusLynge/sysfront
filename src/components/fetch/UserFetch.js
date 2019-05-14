@@ -13,7 +13,7 @@ class UserFetch {
   fetchData = () => {
     var decoded = jwt_decode(localStorage.getItem('jwtToken'));
     const options = this.makeOptions("GET", true); //True add's the token
-    return fetch(URL + "/api/info/" + decoded.username, options).then(handleHttpErrors);
+    return fetch(URL + "/api/info/" + decoded.username, options).then(handleHttpErrors).then( data => data.flightWish );
   };
 
   login = async (user, pass) => {
@@ -34,7 +34,6 @@ class UserFetch {
 
   getToken = () => {
     const token = localStorage.getItem("jwtToken");
-    console.log("token", token);
     return token;
   };
 

@@ -1,7 +1,6 @@
 import React from "react";
 import Navigation from "../navigation";
 import User from "../user";
-
 const UserPage = props => {
   return (
     <React.Fragment>

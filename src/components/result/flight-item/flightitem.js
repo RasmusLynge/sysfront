@@ -114,6 +114,7 @@ let eventClick = e => {
    alert(events)
 };
 
+
 let fetchEvents = async e => {
   const latitude = e.cordiEnd.split("/")[0];
   const longitude = e.cordiEnd.split("/")[1];

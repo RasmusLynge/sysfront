@@ -26,6 +26,11 @@ class flightFetch {
     fetch(userURL + "/info/user/wishpost/" + id, options)
   };
 
+  deleteData = async id => {
+    const options = await this.makeOptionsToken("DELETE");
+    fetch(userURL + "/info/user/wishdelete/" + id, options);
+  };
+
   makeOptionsToken(method, body) {
     var opts = {
       method: method,
