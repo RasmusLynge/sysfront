@@ -29,9 +29,9 @@ function addTimes(t0, t1) {
     return timeFromMins(timeToMins(t0) + timeToMins(t1));
 }
 
-function deleteWish(id, e, update) {
+async function deleteWish(id, e, update) {
     e.preventDefault();
-    FetchFlights.deleteData(id);
+    await FetchFlights.deleteData(id);
     update();
 }
 
