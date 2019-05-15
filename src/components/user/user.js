@@ -60,7 +60,10 @@ class User extends Component {
 
   update = () => {
     console.log("update");
-    this.fetchFlights();
+
+    setTimeout(() => {
+      this.fetchFlights();
+    }, 250);
   }
 
   flightParser = () => {
