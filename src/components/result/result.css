@@ -198,3 +198,8 @@ body {
 .radio-area input[type=radio]:checked + span {
     background: url(img/checkbox.png) center no-repeat;;
 }
+.reverse-icon {
+    height: 18px;
+    width: 18px;
+    margin: 0px 10px 0px 10px;
+}

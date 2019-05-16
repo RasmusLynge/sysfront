@@ -98,11 +98,18 @@ const FlightItem = ({ e }) => {
   );
 };
 
+<<<<<<< HEAD
 let eventClick = (e, eventData) => {
   fetchEvents(e, eventData);
  // do something with events that are now in state
  
 }
+=======
+let eventClick = e => {
+  const events = fetchEvents(e);
+  // do something with events that are now in state
+};
+>>>>>>> 2ad559da6c5250301c1373a231729678f1d45199
 
 let fetchEvents = async (e, eventData) => {
   
@@ -117,8 +124,18 @@ let fetchEvents = async (e, eventData) => {
   );
   console.log(url);
   const events = await FetchEvents.fetchData(url);
+<<<<<<< HEAD
   eventData = events;
   console.log(eventData)
+=======
+  console.log(events);
+  setTimeout(() => {
+    alert(JSON.stringify(events))
+  }, 250);
+  return events;
+
+  //this.setState({ eventData: events });
+>>>>>>> 2ad559da6c5250301c1373a231729678f1d45199
 };
 
 export default FlightItem;

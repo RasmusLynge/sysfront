@@ -6,7 +6,7 @@ import { Popover } from "../popover";
 import FlightItem from "./flight-item";
 import FetchFlights from "./FetchFlights";
 import FetchEvents from "./FetchEvents.js";
-
+import reverseIcon from "../result/img/reverse-icon.png";
 import "react-datepicker/dist/react-datepicker.css";
 import "rc-slider/assets/index.css";
 import "./result.css";
@@ -77,7 +77,7 @@ class Result extends Component {
 
   fetchEvents = async (evt) => {
     const url = FetchEvents.directions(
-      this.state.departure, 
+      this.state.departure,
       this.state.destination,
       this.state.depart
     );
@@ -85,7 +85,7 @@ class Result extends Component {
     this.setState({ flightData: flights });
   };
 
-  
+
 
   departureChange = e => {
     const departureInput = e.target.value;
@@ -179,10 +179,10 @@ class Result extends Component {
   };
   sortTimes(array, sortby) {
     if (sortby === "departure_time") {
-      return array.sort(function(a, b) {
+      return array.sort(function (a, b) {
         if (
           parseInt(a.departureTime.split(":")[0]) -
-            parseInt(b.departureTime.split(":")[0]) ===
+          parseInt(b.departureTime.split(":")[0]) ===
           0
         ) {
           return (
@@ -197,10 +197,10 @@ class Result extends Component {
         }
       });
     } else if (sortby === "duration") {
-      return array.sort(function(a, b) {
+      return array.sort(function (a, b) {
         if (
           parseInt(a.duration.split(":")[0]) -
-            parseInt(b.duration.split(":")[0]) ===
+          parseInt(b.duration.split(":")[0]) ===
           0
         ) {
           return (
@@ -221,6 +221,12 @@ class Result extends Component {
     this.setState({ [evt.target.id]: evt.target.value });
     this.sortFlights(evt);
   };
+
+  reverseSort = () => {
+    let currentSort = this.state.flightData;
+    let reverseSort = currentSort.reverse();
+    this.setState({ flightData: reverseSort });
+  }
 
   render() {
     const textInputPassengers = `${this.state.passengers} Traveller`;
@@ -339,6 +345,7 @@ class Result extends Component {
                 <option value="departure_time">By Departure time</option>
                 <option value="duration">By Duration</option>
               </select>
+              <img className="reverse-icon" src={reverseIcon} onClick={() => this.reverseSort()}/>
             </div>
             <div className="result-catalog">
               <this.flightParser />
