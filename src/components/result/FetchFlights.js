@@ -16,7 +16,7 @@ class flightFetch {
 
   directions = (fromCountry, toCountry, date) => {
     date = date.toLocaleDateString();
-    date = date.replace(/\./g, "-");
+    date = date.replace(/\//g, "-");
     let url = `/country/date/${fromCountry}/${toCountry}/${date}`;
     return url;
   };

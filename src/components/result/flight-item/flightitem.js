@@ -1,4 +1,4 @@
-import React , {useState} from "react";
+import React, { useState } from "react";
 import lufthansaLogo from "./img/lufthansaLogo.png";
 import ryanAirLogo from "./img/ryanairLogo.png";
 import sasLogo from "./img/sasLogo.png";
@@ -33,7 +33,7 @@ function addTimes(t0, t1) {
 
 
 const FlightItem = ({ e }) => {
-  const [eventData] = useState(0);
+  const [eventData, setEventData] = useState([]);
   var logo = errorLogo;
 
   if (e.airline === "Ryanair Ltd") {
@@ -48,94 +48,93 @@ const FlightItem = ({ e }) => {
   if (e.airline === "Lufthansa Group") {
     logo = lufthansaLogo;
   }
+  const eventClick = async (e) => {
+    const eventArr = await fetchEvents(e);
+    setEventData(eventArr);
+  }
+const EventRender = () => {
+  if (eventData.length == 0 ){
+    return ""
+  } else {
+   return <span>Events near destination:<br /><ol>{eventData.map((e, i) => <li key={i}> <p>{e}</p> </li>)} </ol> </span>
+  }
+}
+  const fetchEvents = async (e) => {
+    const latitude = e.cordiEnd.split('/')[0];
+    const longitude = e.cordiEnd.split('/')[1];
+    const kilometerRange = 100;
+    const url = FetchEvents.makeurl(
+      latitude,
+      longitude,
+      kilometerRange //km away from the airport 
+    );
+    console.log(url);
+    const events = await FetchEvents.fetchData(url)
+    //const jsonarr = JSON.parse(events)
+    const arr = []
+    Object.keys(events).map(key => {
+      const value = events[key]
+      arr.unshift(value.title)
+    })
+    return arr;
+  };
 
   return (
-    <div className="flight-item grid">
-      <div className="left-block__item">
-        <div className="head-item">
-          <div className="way-item">departure</div>
-          <div className="logo-company">
-            <img src={logo} alt="" width="90" height="90" />
+    <div>
+      <div className="flight-item grid">
+        <div className="left-block__item">
+          <div className="head-item">
+            <div className="way-item">departure</div>
+            <div className="logo-company">
+              <img src={logo} alt="" width="90" height="90" />
+            </div>
           </div>
         </div>
-      </div>
-      <div className="center-block__item">
-        <div className="flying-info">
-          {e.departureDate} From: {e.startDestination} - To: {e.endDestination}
+        <div className="center-block__item">
+          <div className="flying-info">
+            {e.departureDate} From: {e.startDestination} - To: {e.endDestination}
+          </div>
+          <div className="flight-line">
+            <div className="flight-line__departure">
+              <b>Departure</b>
+              <span>{e.departureTime}</span>
+            </div>
+            <div className="divider" />
+            <div className="flight-line__arrival">
+              <b>Arrival</b>
+              <span>{addTimes(e.departureTime, e.duration)}</span>
+            </div>
+            <div className="divider" />
+            <div className="flight-line__time">
+              <b>Time</b>
+              <span>{e.duration}</span>
+            </div>
+            <div className="divider" />
+            <div className="flight-line__time">
+              <b>Seats</b>
+              <span>{e.numberOfSeats}</span>
+            </div>
+          </div>
+          <EventRender />
         </div>
-        <div className="flight-line">
-          <div className="flight-line__departure">
-            <b>Departure</b>
-            <span>{e.departureTime}</span>
-          </div>
-          <div className="divider" />
-          <div className="flight-line__arrival">
-            <b>Arrival</b>
-            <span>{addTimes(e.departureTime, e.duration)}</span>
-          </div>
-          <div className="divider" />
-          <div className="flight-line__time">
-            <b>Time</b>
-            <span>{e.duration}</span>
-          </div>
-          <div className="divider" />
-          <div className="flight-line__time">
-            <b>Seats</b>
-            <span>{e.numberOfSeats}</span>
-          </div>
+        <div className="right-block__item">
+          <div className="item-price">{e.price},-</div>
+          <button className="select-now">select now</button>
+          <br />
+          <button className="select-wish">wishlist</button>
+          <br />
+          <button onClick={() => eventClick(e)} className="select-wish">Look for events near destination (100 km)</button>
+          <br />
+
         </div>
+
       </div>
-      <div className="right-block__item">
-        <div className="item-price">{e.price},-</div>
-        <button className="select-now">select now</button>
-        <br />
-        <button className="select-wish">wishlist</button>
-        <br />
-        <button onClick={() => eventClick(e, eventData)} className="select-wish">Look for events near destination (100 km)</button>
-        <br />
-      </div>
+
     </div>
   );
+
+
 };
 
-<<<<<<< HEAD
-let eventClick = (e, eventData) => {
-  fetchEvents(e, eventData);
- // do something with events that are now in state
- 
-}
-=======
-let eventClick = e => {
-  const events = fetchEvents(e);
-  // do something with events that are now in state
-};
->>>>>>> 2ad559da6c5250301c1373a231729678f1d45199
-
-let fetchEvents = async (e, eventData) => {
-  
-
-  const latitude = e.cordiEnd.split('/')[0];
-  const longitude = e.cordiEnd.split('/')[1];
-  const kilometerRange = 100; 
-  const url = FetchEvents.makeurl(
-    latitude,
-    longitude,
-    kilometerRange //km away from the airport 
-  );
-  console.log(url);
-  const events = await FetchEvents.fetchData(url);
-<<<<<<< HEAD
-  eventData = events;
-  console.log(eventData)
-=======
-  console.log(events);
-  setTimeout(() => {
-    alert(JSON.stringify(events))
-  }, 250);
-  return events;
-
-  //this.setState({ eventData: events });
->>>>>>> 2ad559da6c5250301c1373a231729678f1d45199
-};
 
 export default FlightItem;
