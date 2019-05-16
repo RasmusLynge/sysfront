@@ -4,8 +4,10 @@ import ryanAirLogo from "./img/ryanairLogo.png";
 import sasLogo from "./img/sasLogo.png";
 import iagLogo from "./img/iagLogo.png";
 import errorLogo from "./img/errorLogo.png";
+import Liked from "./img/Liked.png";
 import "./flightitem.css";
-import FetchEvents from "../FetchEvents"
+import FetchEvents from "../FetchEvents";
+import FetchFlights from "../FetchFlights";
 
 // Convert a time in hh:mm format to minutes
 function timeToMins(time) {
@@ -29,9 +31,6 @@ function addTimes(t0, t1) {
   return timeFromMins(timeToMins(t0) + timeToMins(t1));
 }
 
-
-
-
 const FlightItem = ({ e }) => {
   const [eventData, setEventData] = useState([]);
   var logo = errorLogo;
@@ -48,34 +47,53 @@ const FlightItem = ({ e }) => {
   if (e.airline === "Lufthansa Group") {
     logo = lufthansaLogo;
   }
-  const eventClick = async (e) => {
+  const eventClick = async e => {
     const eventArr = await fetchEvents(e);
     setEventData(eventArr);
-  }
-const EventRender = () => {
-  if (eventData.length == 0 ){
-    return ""
-  } else {
-   return <span>Events near destination:<br /><ol>{eventData.map((e, i) => <li key={i}> <p>{e}</p> </li>)} </ol> </span>
-  }
-}
-  const fetchEvents = async (e) => {
-    const latitude = e.cordiEnd.split('/')[0];
-    const longitude = e.cordiEnd.split('/')[1];
+  };
+  const EventRender = () => {
+    if (eventData.length === 0) {
+      return "";
+    } else {
+      return (
+        <span>
+          <div className="event-item">
+            <div className="left-block__item">
+              <div className="head-item">
+                <div className="way-item">Events</div>
+              </div>
+            </div>
+            <div className="">
+              <div className="flying-info">
+                Events within 100km of your airport
+              </div>
+                {eventData.map((e, i) => (
+                  <li className="event-info" key={i}>
+                    {e}
+                  </li>
+                ))}
+            </div>
+          </div>
+        </span>
+      );
+    }
+  };
+  const fetchEvents = async e => {
+    const latitude = e.cordiEnd.split("/")[0];
+    const longitude = e.cordiEnd.split("/")[1];
     const kilometerRange = 100;
     const url = FetchEvents.makeurl(
       latitude,
       longitude,
-      kilometerRange //km away from the airport 
+      kilometerRange //km away from the airport
     );
-    console.log(url);
-    const events = await FetchEvents.fetchData(url)
+    const events = await FetchEvents.fetchData(url);
     //const jsonarr = JSON.parse(events)
-    const arr = []
+    const arr = [];
     Object.keys(events).map(key => {
-      const value = events[key]
-      arr.unshift(value.title)
-    })
+      const value = events[key];
+      arr.unshift(value.title);
+    });
     return arr;
   };
 
@@ -92,7 +110,8 @@ const EventRender = () => {
         </div>
         <div className="center-block__item">
           <div className="flying-info">
-            {e.departureDate} From: {e.startDestination} - To: {e.endDestination}
+            {e.departureDate} From: {e.startDestination} - To:{" "}
+            {e.endDestination}
           </div>
           <div className="flight-line">
             <div className="flight-line__departure">
@@ -115,26 +134,43 @@ const EventRender = () => {
               <span>{e.numberOfSeats}</span>
             </div>
           </div>
-          <EventRender />
         </div>
         <div className="right-block__item">
           <div className="item-price">{e.price},-</div>
-          <button className="select-now">select now</button>
+          <button onClick={() => eventClick(e)} className="select-now">
+            See Events
+          </button>
           <br />
-          <button className="select-wish">wishlist</button>
+          <div>{showWish(e)}</div>
           <br />
-          <button onClick={() => eventClick(e)} className="select-wish">Look for events near destination (100 km)</button>
-          <br />
-
         </div>
-
       </div>
-
+      <EventRender />
     </div>
   );
-
-
 };
 
+function addWish(id, e) {
+  e.preventDefault();
+
+  if (localStorage.getItem("jwtToken") != null) {
+    FetchFlights.postData(id);
+  }
+}
+
+function showWish(e) {
+  if (localStorage.getItem("jwtToken") != null)
+    return (
+      <div>
+        <label className="heart-label">Add wish</label>
+        <img
+          src={Liked}
+          alt=""
+          className="heart"
+          onClick={evt => addWish(e.id, evt)}
+        />
+      </div>
+    );
+}
 
 export default FlightItem;

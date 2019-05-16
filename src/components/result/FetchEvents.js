@@ -10,7 +10,6 @@ function handleHttpErrors(res) {
 class eventFetch {
 
   fetchData = async (url) => {
-    console.log(endPoint + url)
     return fetch(endPoint + url).then(handleHttpErrors);
   };
 

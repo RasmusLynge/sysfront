@@ -75,7 +75,7 @@ class Result extends Component {
     this.setState({ flightData: flights });
   };
 
-  fetchEvents = async (evt) => {
+  fetchEvents = async evt => {
     const url = FetchEvents.directions(
       this.state.departure,
       this.state.destination,
@@ -84,8 +84,6 @@ class Result extends Component {
     const flights = await FetchFlights.fetchData(url);
     this.setState({ flightData: flights });
   };
-
-
 
   departureChange = e => {
     const departureInput = e.target.value;
@@ -146,43 +144,53 @@ class Result extends Component {
   };
 
   sortFlights = evt => {
-    if (evt.target.value === "price") {
-      let flightsSort = this.state.flightData.sort((a, b) =>
-        Number(a.price) > Number(b.price) ? 1 : -1
-      );
-      this.setState({ flightData: flightsSort });
-    }
-    if (evt.target.value === "seats") {
-      let flightsSort = this.state.flightData.sort((a, b) =>
-        Number(a.numberOfSeats) > Number(b.numberOfSeats) ? 1 : -1
-      );
-      this.setState({ flightData: flightsSort });
-    }
-    if (evt.target.value === "airline") {
-      let flightsSort = this.state.flightData.sort((a, b) =>
-        a.airline > b.airline ? 1 : -1
-      );
-      this.setState({ flightData: flightsSort });
-    }
-    if (evt.target.value === "departure_time") {
-      //let flightDepartureTimes = this.state.flightData.map(a => a.departureTime);
-      //console.log("departureTimes", flightDepartureTimes);
-      let flightsSort = this.sortTimes(this.state.flightData, "departure_time");
-      this.setState({ flightData: flightsSort });
-    }
-    if (evt.target.value === "duration") {
-      //let duration = this.state.flightData.map(a => a.duration);
-      //console.log("duration", duration);
-      let flightsSort = this.sortTimes(this.state.flightData, "duration");
-      this.setState({ flightData: flightsSort });
+    if (
+      typeof this.state.flightData === "undefined" ||
+      this.state.flightData === null
+    ) {
+      console.log("ERRORORO");
+    } else if (this.state.flightData.length > 0) {
+      if (evt.target.value === "price") {
+        let flightsSort = this.state.flightData.sort((a, b) =>
+          Number(a.price) > Number(b.price) ? 1 : -1
+        );
+        this.setState({ flightData: flightsSort });
+      }
+      if (evt.target.value === "seats") {
+        let flightsSort = this.state.flightData.sort((a, b) =>
+          Number(a.numberOfSeats) > Number(b.numberOfSeats) ? 1 : -1
+        );
+        this.setState({ flightData: flightsSort });
+      }
+      if (evt.target.value === "airline") {
+        let flightsSort = this.state.flightData.sort((a, b) =>
+          a.airline > b.airline ? 1 : -1
+        );
+        this.setState({ flightData: flightsSort });
+      }
+      if (evt.target.value === "departure_time") {
+        //let flightDepartureTimes = this.state.flightData.map(a => a.departureTime);
+        //console.log("departureTimes", flightDepartureTimes);
+        let flightsSort = this.sortTimes(
+          this.state.flightData,
+          "departure_time"
+        );
+        this.setState({ flightData: flightsSort });
+      }
+      if (evt.target.value === "duration") {
+        //let duration = this.state.flightData.map(a => a.duration);
+        //console.log("duration", duration);
+        let flightsSort = this.sortTimes(this.state.flightData, "duration");
+        this.setState({ flightData: flightsSort });
+      }
     }
   };
   sortTimes(array, sortby) {
     if (sortby === "departure_time") {
-      return array.sort(function (a, b) {
+      return array.sort(function(a, b) {
         if (
           parseInt(a.departureTime.split(":")[0]) -
-          parseInt(b.departureTime.split(":")[0]) ===
+            parseInt(b.departureTime.split(":")[0]) ===
           0
         ) {
           return (
@@ -197,10 +205,10 @@ class Result extends Component {
         }
       });
     } else if (sortby === "duration") {
-      return array.sort(function (a, b) {
+      return array.sort(function(a, b) {
         if (
           parseInt(a.duration.split(":")[0]) -
-          parseInt(b.duration.split(":")[0]) ===
+            parseInt(b.duration.split(":")[0]) ===
           0
         ) {
           return (
@@ -223,10 +231,17 @@ class Result extends Component {
   };
 
   reverseSort = () => {
-    let currentSort = this.state.flightData;
-    let reverseSort = currentSort.reverse();
-    this.setState({ flightData: reverseSort });
-  }
+    if (
+      typeof this.state.flightData === "undefined" ||
+      this.state.flightData === null
+    ) {
+      console.log("ERRORORO");
+    } else if (this.state.flightData.length > 0) {
+      let currentSort = this.state.flightData;
+      let reverseSort = currentSort.reverse();
+      this.setState({ flightData: reverseSort });
+    }
+  };
 
   render() {
     const textInputPassengers = `${this.state.passengers} Traveller`;
@@ -306,24 +321,6 @@ class Result extends Component {
                   Direct
                 </label>
               </div>
-              <div className="radio-area">
-                <label className="radio-label">
-                  <input name="stops" type="radio" />
-                  <span className="checkbox-span">
-                    <span />
-                  </span>
-                  1 Stop
-                </label>
-              </div>
-              <div className="radio-area">
-                <label className="radio-label">
-                  <input name="stops" type="radio" />
-                  <span className="checkbox-span">
-                    <span />
-                  </span>
-                  2+ Stops
-                </label>
-              </div>
             </div>
             <div className="slider-price">
               <div className="slider-title">Price</div>
@@ -334,7 +331,7 @@ class Result extends Component {
             <div className="result-catalog__filter">
               <label>Sort results by: </label>
               <select
-                className="price-select"
+                className="option-sort"
                 id="sortData"
                 onChange={this.onChange}
               >
@@ -345,7 +342,12 @@ class Result extends Component {
                 <option value="departure_time">By Departure time</option>
                 <option value="duration">By Duration</option>
               </select>
-              <img className="reverse-icon" src={reverseIcon} onClick={() => this.reverseSort()}/>
+              <img
+                alt=""
+                className="reverse-icon"
+                src={reverseIcon}
+                onClick={() => this.reverseSort()}
+              />
             </div>
             <div className="result-catalog">
               <this.flightParser />
